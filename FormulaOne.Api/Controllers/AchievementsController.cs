@@ -4,14 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using FormulaOne.Entities.Dtos.Responses;
 using FormulaOne.Entities.Dtos.Requests;
 using FormulaOne.Entities.DbSet;
+using MediatR;
 
 namespace FormulaOne.Api.Controllers
 {
-    public class AchievementController : BaseController
+    public class AchievementsController : BaseController
     {
-        public AchievementController(
-            IUnitOfWork unitOfWork, 
-            IMapper mapper) : base(unitOfWork, mapper)
+        public AchievementsController(
+            IUnitOfWork unitOfWork,
+            IMediator mediator,
+            IMapper mapper) : base(unitOfWork, mediator, mapper)
         {
         }
 

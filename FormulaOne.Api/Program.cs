@@ -9,9 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 
 //initializing my dbcontext inside the Dependency Injection container the options that are beibg injected here will be used inside dbcontext
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//   options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -26,6 +23,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+//injecting the MediatR to our DI
+
+//what this does is tell the MediatR to scan all the assemblies of the program.cs
+//because its the main entry point in order for it to utilize it
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
 
 var app = builder.Build();
